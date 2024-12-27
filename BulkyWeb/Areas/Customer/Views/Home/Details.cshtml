@@ -4,7 +4,7 @@
         <meta property="og:title" content="@Model.Product.Title" />
         <meta property="og:description" content="@Model.Product.Description?.Replace("<p>", "").Replace("</p>", "")" />
         <meta property="og:url" content="@Url.Action("Details", "Home", new { area = "Customer", slug = Model.Product.Slug }, Context.Request.Scheme)" />
-        <meta property="og:image" content="@Url.Content($"https://mybulkystore.azurewebsites.net{Model.Product.ProductImages.FirstOrDefault()?.ImageUrl.Replace("\\", "/")}")" />
+        <meta property="og:image" content="@Url.Content($"https://aspmvcfinal.azurewebsites.net{Model.Product.ProductImages.FirstOrDefault()?.ImageUrl.Replace("\\", "/")}")" />
         <meta property="og:type" content="product" />
         <meta property="fb:app_id" content="351338174711550" />
         <meta property="og:image:width" content="358" />
