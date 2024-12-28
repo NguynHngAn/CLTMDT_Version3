@@ -18,17 +18,19 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailSender _emailSender;
-		private readonly IVnPayService _vnPayservice;
+        private readonly IVnPayService _vnPayservice;
 
-		[BindProperty]
+        [BindProperty]
         public ShoppingCartVM ShoppingCartVM { get; set; }
+        [BindProperty]
+        public VnPaymentResponseVM VnPaymentResponseVM { get; set; }
         public CartController(IUnitOfWork unitOfWork, IEmailSender emailSender, IVnPayService vnPayservice)
         {
             _unitOfWork = unitOfWork;
             _emailSender = emailSender;
-			_vnPayservice = vnPayservice;
+            _vnPayservice = vnPayservice;
 
-		}
+        }
 
 
         public IActionResult Index()
@@ -142,41 +144,22 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 
 
 
-
-
-
-            if (payment == "VnPay Payment")
-            {
-                var vnPayModel = new VnPaymentRequestModel
+                foreach (var cart in ShoppingCartVM.ShoppingCartList)
                 {
-                    Amount = (long)(ShoppingCartVM.OrderHeader.OrderTotal)*24000,
-                    CreatedDate = DateTime.Now,
-                    Description = $"Payment for Order #{ShoppingCartVM.OrderHeader.Id}",
-                    FullName = applicationUser.Name,
-                    OrderId = applicationUser.Id
-				};
-
-				return Redirect(_vnPayservice.CreatePaymentUrl(HttpContext, vnPayModel));
-            }
-
-			_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
-			_unitOfWork.Save();
-
-			foreach (var cart in ShoppingCartVM.ShoppingCartList)
-			{
-				OrderDetail orderDetail = new()
-				{
-					ProductId = cart.ProductId,
-					OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
-					Price = cart.Price,
-					Count = cart.Count
-				};
-				_unitOfWork.OrderDetail.Add(orderDetail);
-			}
-			_unitOfWork.Save();
+                    OrderDetail orderDetail = new()
+                    {
+                        ProductId = cart.ProductId,
+                        OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
+                        Price = cart.Price,
+                        Count = cart.Count
+                    };
+                    _unitOfWork.OrderDetail.Add(orderDetail);
+                }
+                _unitOfWork.Save();
 
 
-			if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
                 // Handle Stripe payment
                 var domain = Request.Scheme + "://" + Request.Host.Value + "/";
@@ -311,6 +294,70 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult PaymentFail()
+        {
+            return View("Fail");
+        }
+
+        public IActionResult PaymentSuccess()
+        {
+            return View("Success");
+        }
+
+        public IActionResult PaymentCallBack(int id)
+        {
+            // Xử lý phản hồi từ VnPay
+            var response = _vnPayservice.PaymentExecute(Request.Query);
+
+            if (response == null || response.VnPayResponseCode != "00")
+            {
+                TempData["Message"] = $"Thanh toán VnPay thất bại. Mã lỗi: {response?.VnPayResponseCode ?? "Không rõ lỗi"}";
+                return RedirectToAction("PaymentFail");
+            }
+
+            // Lấy thông tin đơn hàng từ cơ sở dữ liệu
+            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id, includeProperties: "ApplicationUser");
+            if (orderHeader == null)
+            {
+                TempData["Message"] = "Không tìm thấy đơn hàng để cập nhật.";
+                return RedirectToAction("PaymentFail");
+            }
+
+            // Cập nhật trạng thái thanh toán và đơn hàng
+            orderHeader.PaymentStatus = SD.PaymentStatusApproved;
+            orderHeader.OrderStatus = SD.StatusApproved;
+            _unitOfWork.OrderHeader.Update(orderHeader);
+            _unitOfWork.Save();
+
+            // Giảm số lượng tồn kho
+            var orderDetails = _unitOfWork.OrderDetail.GetAll(od => od.OrderHeaderId == id);
+            foreach (var detail in orderDetails)
+            {
+                var product = _unitOfWork.Product.Get(p => p.Id == detail.ProductId);
+                if (product != null)
+                {
+                    product.StockQuantity -= detail.Count;
+                    _unitOfWork.Product.Update(product);
+                }
+            }
+            _unitOfWork.Save();
+
+            // Xóa giỏ hàng
+            var shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
+            if (shoppingCarts.Any())
+            {
+                _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
+                HttpContext.Session.Clear();
+                _unitOfWork.Save();
+            }
+
+            // Gửi email xác nhận đơn hàng
+            _emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - Bulky Book",
+                $"<p>New Order Created - {orderHeader.Id}</p>");
+
+            TempData["Message"] = $"Thanh toán VnPay thành công! Đơn hàng #{id} đã được xử lý.";
+            return RedirectToAction("OrderConfirmation", new { id = id });
+        }
 
 
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
@@ -332,42 +379,9 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             }
         }
 
-        public IActionResult PaymentFail()
-        {
-            return View("Fail");
-        }
-
-        public IActionResult PaymentSuccess()
-        {
-            return View("Success");
-        }
-
-        public IActionResult PaymentCallBack(int id)
-        {
-            var response = _vnPayservice.PaymentExecute(Request.Query);
-            if(response == null || response.VnPayResponseCode != "00")
-            {
-                TempData["Message"] = $"Lỗi thanh toán VnPay: {response.VnPayResponseCode}";
-                return RedirectToAction("PaymentFail");
-            }
-
-			var orderDetails = _unitOfWork.OrderDetail.GetAll(od => od.OrderHeaderId == id);
-			foreach (var detail in orderDetails)
-			{
-				var product = _unitOfWork.Product.Get(p => p.Id == detail.ProductId);
-				if (product != null)
-				{
-					product.StockQuantity -= detail.Count;
-					_unitOfWork.Product.Update(product);
-				}
-			}
-			_unitOfWork.Save();
 
 
-			TempData["Message"] = $"Thanh toán VnPay thành công!!";
-			return RedirectToAction("PaymentSuccess");
-            
-        }
 
-	}
+
+    }
 }

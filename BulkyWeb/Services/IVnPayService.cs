@@ -4,8 +4,8 @@ namespace BulkyBookWeb.Services
 {
     public interface IVnPayService
     {
-        string CreatePaymentUrl(HttpContext context, VnPaymentRequestModel model);
-        VnPaymentResponseModel PaymentExecute(IQueryCollection collections);
+        string CreatePaymentUrl(HttpContext context, ShoppingCartVM model);
+        VnPaymentResponseVM PaymentExecute(IQueryCollection collections);
 
     }
 }

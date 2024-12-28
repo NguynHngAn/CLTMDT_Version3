@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BulkyBook.Models.ViewModels
 {
-    public class VnPaymentResponseModel
+    public class VnPaymentResponseVM
     {
         public bool Success { get; set; }
         public string PaymentMethod { get; set; }
@@ -18,12 +18,4 @@ namespace BulkyBook.Models.ViewModels
         public string VnPayResponseCode { get; set; }
     }
 
-    public class VnPaymentRequestModel
-    {
-        public string OrderId { get; set; }
-        public string FullName { get; set; }
-        public string Description { get; set; }
-        public double Amount { get; set; }
-        public DateTime CreatedDate { get; set; }
-    }
 }

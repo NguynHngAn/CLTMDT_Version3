@@ -14,7 +14,7 @@ namespace BulkyBookWeb.Services
         {
             _config = config;
         }
-        public string CreatePaymentUrl(HttpContext context, VnPaymentRequestModel model)
+        public string CreatePaymentUrl(HttpContext context, ShoppingCartVM model)
         {
             var tick = DateTime.Now.Ticks.ToString();
             var vnpay = new VnPayLibrary();
@@ -22,14 +22,14 @@ namespace BulkyBookWeb.Services
             vnpay.AddRequestData("vnp_Version", _config["VnPay:Version"]);
             vnpay.AddRequestData("vnp_Command", _config["VnPay:Command"]);
             vnpay.AddRequestData("vnp_TmnCode", _config["VnPay:TmnCode"]);
-            vnpay.AddRequestData("vnp_Amount", (model.Amount).ToString());
+            vnpay.AddRequestData("vnp_Amount", (model.OrderHeader.OrderTotal).ToString());
 
-            vnpay.AddRequestData("vnp_CreateDate", model.CreatedDate.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_CreateDate", model.OrderHeader.OrderDate.ToString("yyyyMMddHHmmss"));
             vnpay.AddRequestData("vnp_CurrCode", _config["VnPay:CurrCode"]);
             vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress(context));
             vnpay.AddRequestData("vnp_Locale", _config["VnPay:Locale"]);
 
-            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toán cho đơn hàng:" + model.OrderId);
+            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toán cho đơn hàng:" + model.OrderHeader.Id);
             vnpay.AddRequestData("vnp_OrderType", "other"); //default value: other
             vnpay.AddRequestData("vnp_ReturnUrl", _config["VnPay:PaymentBackReturnUrl"]);
 
@@ -39,7 +39,7 @@ namespace BulkyBookWeb.Services
             return paymentUrl;
         }
 
-        public VnPaymentResponseModel PaymentExecute(IQueryCollection collections)
+        public VnPaymentResponseVM PaymentExecute(IQueryCollection collections)
         {
             var vnpay = new VnPayLibrary();
             foreach (var (key, value) in collections)
@@ -59,12 +59,12 @@ namespace BulkyBookWeb.Services
             bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, _config["VnPay:HashSecret"]);
             if(!checkSignature)
             {
-                return new VnPaymentResponseModel
+                return new VnPaymentResponseVM
                 {
                     Success = false
                 };
             }
-            return new VnPaymentResponseModel
+            return new VnPaymentResponseVM
             {
                 Success = true,
                 PaymentMethod = "VnPay",

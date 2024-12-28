@@ -76,3 +76,29 @@ D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\A
 D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version2 - Copy\Bulky.Models\obj\Debug\net8.0\refint\BulkyBook.Models.dll
 D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version2 - Copy\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.pdb
 D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version2 - Copy\Bulky.Models\obj\Debug\net8.0\ref\BulkyBook.Models.dll
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\bin\Debug\net8.0\BulkyBook.Models.deps.json
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\bin\Debug\net8.0\BulkyBook.Models.dll
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\bin\Debug\net8.0\BulkyBook.Models.pdb
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.csproj.AssemblyReference.cache
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.AssemblyInfoInputs.cache
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.AssemblyInfo.cs
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.csproj.CoreCompileInputs.cache
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.sourcelink.json
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.dll
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\refint\BulkyBook.Models.dll
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.pdb
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version3\Bulky.Models\obj\Debug\net8.0\ref\BulkyBook.Models.dll
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\bin\Debug\net8.0\BulkyBook.Models.deps.json
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\bin\Debug\net8.0\BulkyBook.Models.dll
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\bin\Debug\net8.0\BulkyBook.Models.pdb
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.csproj.AssemblyReference.cache
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.AssemblyInfoInputs.cache
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.AssemblyInfo.cs
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.csproj.CoreCompileInputs.cache
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.sourcelink.json
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.dll
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\refint\BulkyBook.Models.dll
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\BulkyBook.Models.pdb
+D:\Học kỳ 10\Chiến lược thương mại điện tử\code_final_CLTMDT\ASD_CLTMDT_Version4\Bulky.Models\obj\Debug\net8.0\ref\BulkyBook.Models.dll
